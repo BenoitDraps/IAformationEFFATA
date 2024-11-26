@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement à la rédaction de prompts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Entraînez-vous à rédiger des prompts</h1>
+    <p>Rédigez votre prompt ci-dessous, puis cliquez sur "Évaluer".</p>
+    <textarea id="prompt" placeholder="Rédigez votre prompt ici..."></textarea>
+    <button onclick="evaluatePrompt()">Évaluer</button>
+    <div id="feedback" class="feedback"></div>
+
+    <script>
+        function evaluatePrompt() {
+            const prompt = document.getElementById("prompt").value;
+            const feedback = document.getElementById("feedback");
+
+            let comments = [];
+
+            if (!prompt.includes("je suis") && !prompt.includes("nous sommes")) {
+                comments.push("🔹 Vous n'avez pas précisé qui vous êtes.");
+            }
+            if (!prompt.includes("destiné à") && !prompt.includes("pour un public")) {
+                comments.push("🔹 Vous n'avez pas défini votre public.");
+            }
+            if (!prompt.includes("dans le contexte de") && !prompt.includes("dans le cadre de")) {
+                comments.push("🔹 Vous n'avez pas précisé le contexte.");
+            }
+            if (prompt.length < 50) {
+                comments.push("🔹 Votre prompt semble trop court. Essayez d'être plus complet.");
+            }
+
+            if (comments.length === 0) {
+                feedback.innerHTML = "✅ Excellent travail ! Votre prompt est bien structuré.";
+            } else {
+                feedback.innerHTML = `<p>Voici quelques suggestions :</p><ul>${comments.map(c => `<li>${c}</li>`).join("")}</ul>`;
+            }
+        }
+    </script>
+</body>
+</html>
